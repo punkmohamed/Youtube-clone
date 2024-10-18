@@ -3,8 +3,17 @@ import logo from '../assets/YouTube_Logo_2017.svg.webp'
 import Button from '../components/Button'
 import { useState } from 'react'
 import { useSidebarContext } from '../context/SideBarContext'
+import { useVideos } from '../hooks/useVideo'
 const PageHeader = () => {
     const [show, setShow] = useState(false)
+
+    const [searchTerm, setSearchTerm] = useState('');
+    const { setSearchQuery } = useVideos();
+
+    const handleSearch = () => {
+        setSearchQuery(searchTerm);
+        setSearchTerm('');
+    };
     return (
         <div className='flex gap-10 sm:gap-20 justify-between items-center pt-2 mb-6 mx-4'>
             <PageHeaderFirstSection hidden={show} />
@@ -14,8 +23,12 @@ const PageHeader = () => {
                     <ArrowLeft />
                 </Button>}
                 <div className='flex flex-grow max-w-[600px]'>
-                    <input type="search" placeholder='Search' className='rounded-l-full border border-secondary-border shadow-inner py-1 px-4 text-lg w-full shadow-secondary focus:border-blue-500 outline-none' />
-                    <Button className=' py-2 px-4 rounded-r-full border border-secondary-border border-l-0 flex-shrink-0'>
+                    <input type="search"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder='Search' className='rounded-l-full border border-secondary-border shadow-inner py-1 px-4 text-lg w-full shadow-secondary focus:border-blue-500 outline-none' />
+                    <Button type='button'
+                        onClick={handleSearch} className=' py-2 px-4 rounded-r-full border border-secondary-border border-l-0 flex-shrink-0'>
                         <Search />
                     </Button>
                 </div>

@@ -1,13 +1,19 @@
 import PageHeader from "./layouts/PageHeader"
 import CategoriesPills from './components/CategoriesPills';
-import { categories, videos } from "./data/home";
+import { categories, videos as fallbackVideos } from "./data/home";
+
 import { useState } from "react";
 import VideoGrid from "./components/VideoGrid";
 import SideBar from "./layouts/SideBar";
 import { SidebarProvider } from "./context/SideBarContext";
+import { useVideos } from "./hooks/useVideo";
 
 function App() {
   const [selectedCat, setSelectedCat] = useState(categories[0]);
+  const { videos: data, error, loading } = useVideos();
+  const videos = error || loading ? fallbackVideos : data;
+  console.log(videos, "videos");
+
   return (
     <SidebarProvider>
       <div className="max-h-screen flex flex-col">
