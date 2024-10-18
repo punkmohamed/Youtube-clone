@@ -3,17 +3,19 @@ import logo from '../assets/YouTube_Logo_2017.svg.webp'
 import Button from '../components/Button'
 import { useState } from 'react'
 import { useSidebarContext } from '../context/SideBarContext'
+import { useNavigate } from 'react-router-dom'
 type PageHeaderProps = {
     setSearchQuery: (data: string) => void
 }
 const PageHeader = ({ setSearchQuery }: PageHeaderProps) => {
     const [show, setShow] = useState(false)
-
+    const navi = useNavigate()
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearch = () => {
         setSearchQuery(searchTerm);
         setSearchTerm('');
+        navi('/')
     };
     return (
         <div className='flex gap-10 sm:gap-20 justify-between items-center pt-2 mb-6 mx-4'>

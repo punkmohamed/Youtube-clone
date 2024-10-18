@@ -23,3 +23,4 @@ export function formatTimeAgo(date: Date) {
     duration /= division.amount
   }
 }
+export const VIEW_FORMATTER = new Intl.NumberFormat(undefined, { notation: "compact" })

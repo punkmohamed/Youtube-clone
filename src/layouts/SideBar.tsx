@@ -28,25 +28,31 @@ import { twMerge } from "tailwind-merge"
 import { playlists, subscriptions } from "../data/sidebar";
 import { useSidebarContext } from "../context/SideBarContext";
 import { PageHeaderFirstSection } from "./PageHeader";
+import { useLocation, useParams } from "react-router-dom";
 
 const SideBar = () => {
 
     const { isLargeOpen, isSmallOpen, close } = useSidebarContext()
+    const { pathname } = useLocation()
+
     return (
         <>
-            <aside
-                className={`sticky top-0 overflow-y-auto scrollbar-hidden pb-4  sm:flex flex-col ml-1 ${isLargeOpen ? "lg:hidden" : "lg:flex"
-                    }`}
-            >
-                <SmallSideBarItem Icon={Home} title="Home" url="/" />
-                <SmallSideBarItem Icon={Repeat} title="Shorts" url="/shorts" />
-                <SmallSideBarItem
-                    Icon={Clapperboard}
-                    title="Subscriptions"
-                    url="/subscriptions"
-                />
-                <SmallSideBarItem Icon={Library} title="Library" url="/library" />
-            </aside>
+            {!pathname.startsWith('/watch') &&
+                <aside
+                    className={`sticky top-0 overflow-y-auto scrollbar-hidden pb-4 md:flex flex-col ml-1 ${isLargeOpen ? "lg:hidden" : "lg:flex"
+                        }`}
+                >
+                    <SmallSideBarItem Icon={Home} title="Home" url="/" />
+                    <SmallSideBarItem Icon={Repeat} title="Shorts" url="/shorts" />
+                    <SmallSideBarItem
+                        Icon={Clapperboard}
+                        title="Subscriptions"
+                        url="/subscriptions"
+                    />
+                    <SmallSideBarItem Icon={Library} title="Library" url="/library" />
+                </aside>
+            }
+
             {isSmallOpen && (
                 <div
                     onClick={close}
@@ -54,7 +60,7 @@ const SideBar = () => {
                 />
             )}
             <aside
-                className={`w-56 lg:sticky absolute top-0 overflow-y-auto scrollbar-hidden pb-4 flex-col gap-2 px-2 ${isLargeOpen ? "lg:flex" : "lg:hidden"
+                className={`w-56 lg:sticky absolute top-0 overflow-y-auto scrollbar-hidden pb-4 flex-col gap-2 px-2 ${isLargeOpen && !pathname.startsWith('/watch') ? "lg:flex" : "lg:hidden"
                     } ${isSmallOpen ? "flex z-[999] bg-white max-h-screen" : "hidden"}`}
             >
                 <div className="lg:hidden pt-2 pb-4 px-2 sticky top-0 bg-white">

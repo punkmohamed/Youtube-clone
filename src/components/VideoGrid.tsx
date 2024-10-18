@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 import { formatDuration } from "../utils/formatDuration"
-import { formatTimeAgo } from "../utils/formatTimeAgo"
-import { useVideos } from "../hooks/useVideo"
+import { formatTimeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
+
+import { Link } from "react-router-dom"
 
 type VideoGrid = {
     id: string,
@@ -18,7 +19,7 @@ type VideoGrid = {
     videoUrl: string,
     error?: string
 }
-const VIEW_FORMATTER = new Intl.NumberFormat(undefined, { notation: "compact" })
+
 
 const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl, videoUrl, error }: VideoGrid) => {
     const [isVideoPlaying, setisVideoPlaying] = useState(false);
@@ -35,7 +36,7 @@ const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl
     }, [isVideoPlaying])
     return (
         <div className="flex flex-col gap-2" onMouseEnter={() => setisVideoPlaying(true)} onMouseLeave={() => setisVideoPlaying(false)}>
-            <a href={`/watch?v=${id}`} className="relative aspect-video">
+            <Link to={`/watch/${id}`} className="relative aspect-video">
                 <img src={thumbnailUrl} className={`block w-full h-full object-cover transition-[border-radius] duration-200  ${isVideoPlaying ? "rounded-none" : "rounded-xl"}`} alt="ThumbNail" />
                 <div className=" absolute bottom-1 right-1 bg-secondary-dark text-secondary text-sm px-0.5 rounded">
                     {formatDuration(duration)}
@@ -49,21 +50,21 @@ const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl
                             frameBorder="0"
                             allow="autoplay; encrypted-media"
                             allowFullScreen
-                            className="absolute inset-0"
+                            className="absolute inset-0 cursor-pointer"
                         ></iframe>
                     ) : null
                 }
 
 
 
-            </a>
+            </Link>
             <div className="flex gap-2">
-                <a href={`/@${channel.id}`} className="flex-shrink-0">
+                <Link to={`/@${channel.id}`} className="flex-shrink-0">
                     <img src={channel.profileUrl} className="size-12 rounded-full" alt="" />
-                </a>
+                </Link>
                 <div className="flex flex-col">
-                    <a href={`/watch?v=${id}`} className="font-bold">{title}</a>
-                    <a href={`/watch?v=${id}`} className="text-secondary-text text-sm">{channel.name}</a>
+                    <Link to={`/watch/${id}`} className="font-bold">{title}</Link>
+                    <Link to={`/watch/${id}`} className="text-secondary-text text-sm">{channel.name}</Link>
                     <div className="text-secondary-text text-sm">
                         {VIEW_FORMATTER.format(views)} Views • {formatTimeAgo(postedAt)}
                     </div>
