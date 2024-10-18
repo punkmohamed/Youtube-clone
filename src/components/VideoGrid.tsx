@@ -15,14 +15,15 @@ type VideoGrid = {
     postedAt: Date,
     duration: number,
     thumbnailUrl: string,
-    videoUrl: string
+    videoUrl: string,
+    error?: string
 }
 const VIEW_FORMATTER = new Intl.NumberFormat(undefined, { notation: "compact" })
 
-const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl, videoUrl }: VideoGrid) => {
+const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl, videoUrl, error }: VideoGrid) => {
     const [isVideoPlaying, setisVideoPlaying] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null)
-    const { error } = useVideos();
+
     useEffect(() => {
         if (videoRef.current == null) return
         if (isVideoPlaying) {

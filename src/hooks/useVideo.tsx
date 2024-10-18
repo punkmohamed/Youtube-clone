@@ -34,14 +34,13 @@ export const useVideos = () => {
     const [videos, setVideos] = useState<Video[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [searchQuery, setSearchQuery] = useState<string>('ariana grande');
 
     console.log(searchQuery, "searchQuery");
 
 
     useEffect(() => {
         const fetchVideos = async () => {
-            if (!searchQuery) return;
             try {
                 setLoading(true);
                 const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&key=${API_KEY}&maxResults=10&type=video`;
@@ -63,7 +62,6 @@ export const useVideos = () => {
                     thumbnailUrl: item.snippet.thumbnails.high.url,
                     videoUrl: `https://www.youtube.com/watch?v=${item.id.videoId}`,
                 }));
-                console.log(mappedVideos, "mappedVideos");
 
                 setVideos(mappedVideos);
             } catch (error) {
@@ -76,7 +74,6 @@ export const useVideos = () => {
 
         fetchVideos();
     }, [searchQuery]);
-    console.log(videos, "videos");
 
     return { videos, loading, error, setSearchQuery };
 };

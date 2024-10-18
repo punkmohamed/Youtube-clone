@@ -3,12 +3,13 @@ import logo from '../assets/YouTube_Logo_2017.svg.webp'
 import Button from '../components/Button'
 import { useState } from 'react'
 import { useSidebarContext } from '../context/SideBarContext'
-import { useVideos } from '../hooks/useVideo'
-const PageHeader = () => {
+type PageHeaderProps = {
+    setSearchQuery: (data: string) => void
+}
+const PageHeader = ({ setSearchQuery }: PageHeaderProps) => {
     const [show, setShow] = useState(false)
 
     const [searchTerm, setSearchTerm] = useState('');
-    const { setSearchQuery } = useVideos();
 
     const handleSearch = () => {
         setSearchQuery(searchTerm);
