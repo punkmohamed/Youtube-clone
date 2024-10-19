@@ -1,18 +1,9 @@
 import axios from 'axios';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { channelDetailProps } from '../pages/Detail';
-const API_KEY = 'AIzaSyDEQEJ3qvVvroAwP-pBh97vXMCHDNJzMeY';
+import { formatVideoDuration } from '../utils/formatVideoDuration';
 
-
-// Function to get random views between 0 and 1 million
-function getRandomViews(): number {
-    return Math.floor(Math.random() * 1000000);
-}
-
-// Function to get random duration between 1 and 10 minutes (in seconds)
-function getRandomDuration(): number {
-    return Math.floor(Math.random() * 600) + 60;
-}
+const API_KEY = 'AIzaSyCnDk7A88Tis3iiLKO_GZcRcEtpoh6WMDA';
 
 // Define the structure of the video data using TypeScript interfaces
 interface Video {
@@ -22,14 +13,14 @@ interface Video {
         name: string;
         profileUrl: string;
         subscriberCount: string | number;
-
     };
     views: number;
     postedAt: Date;
-    duration: number;
+    duration: string; // Use string to store ISO format (e.g., PT4M33S)
     thumbnailUrl: string;
     videoUrl: string;
 }
+
 const VideoContext = createContext(null);
 
 export const VideoProvider = ({ children }: { children: ReactNode }) => {
@@ -37,24 +28,34 @@ export const VideoProvider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState<string>('');
-    const [channelDetail, setChannelDetail] = useState<channelDetailProps | null>(null)
 
     useEffect(() => {
         const fetchVideos = async () => {
             try {
                 setLoading(true);
-                const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&key=${API_KEY}&maxResults=10&type=video`;
-                const videoResponse = await axios.get(apiUrl);
+
+                // Step 1: Fetch video data using the search API
+                const searchApiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&key=${API_KEY}&maxResults=10&type=video`;
+                const videoResponse = await axios.get(searchApiUrl);
                 const videoData = videoResponse.data.items;
 
-                // Step 2: Collect all channelIds into a single array
+                // Step 2: Collect all video IDs into a single array
+                const videoIds = videoData.map((item: any) => item.id.videoId).join(',');
+
+                // Step 3: Make a single API request to fetch detailed video content, including duration
+                const videoDetailsResponse = await axios.get(
+                    `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoIds}&key=${API_KEY}`
+                );
+                const videoDetails = videoDetailsResponse.data.items;
+
+                // Step 4: Collect all channelIds into a single array for channel details
                 const channelIds = videoData.map((item: any) => item.snippet.channelId).join(',');
 
-                // Step 3: Make a single API request to fetch all channel details
+                // Step 5: Fetch all channel details
                 const channelResponse = await axios.get(
                     `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelIds}&key=${API_KEY}`
                 );
-                const channelData = channelResponse?.data?.items;
+                const channelData = channelResponse.data.items;
 
                 // Map channel data by channelId for easier lookup
                 const channelMap = channelData.reduce((acc: any, channel: any) => {
@@ -65,27 +66,27 @@ export const VideoProvider = ({ children }: { children: ReactNode }) => {
                     return acc;
                 }, {});
 
-
-                const mappedVideos: Video[] = videoData.map((item: any) => {
+                // Step 6: Map the detailed video data, including duration
+                const mappedVideos: Video[] = videoDetails.map((item: any) => {
                     const channelId = item.snippet.channelId;
                     const channelInfo = channelMap[channelId] || {};
+                    const duration = formatVideoDuration(item.contentDetails.duration);
 
                     return {
-                        id: item.id.videoId,
+                        id: item.id,
                         title: item.snippet.title,
                         channel: {
                             name: item.snippet.channelTitle,
                             profileUrl: channelInfo.profileUrl || '',
                             subscriberCount: channelInfo.subscriberCount || 'N/A',
                         },
-                        views: getRandomViews(),
+                        views: item.statistics.viewCount || 0, // Real views count from the videos API
                         postedAt: new Date(item.snippet.publishedAt),
-                        duration: getRandomDuration(),
+                        duration: duration, // Duration in ISO 8601 format (PT4M33S)
                         thumbnailUrl: item.snippet.thumbnails.high.url,
-                        videoUrl: `https://www.youtube.com/watch?v=${item.id.videoId}`,
-                    }
+                        videoUrl: `https://www.youtube.com/watch?v=${item.id}`,
+                    };
                 });
-                console.log(mappedVideos, "mappedVideos");
 
                 setVideos(mappedVideos);
             } catch (error) {
@@ -96,9 +97,10 @@ export const VideoProvider = ({ children }: { children: ReactNode }) => {
             }
         };
 
-        fetchVideos();
+        if (searchQuery) {
+            fetchVideos();
+        }
     }, [searchQuery]);
-
 
     return (
         <VideoContext.Provider value={{ videos, loading, error, setSearchQuery }}>
@@ -107,10 +109,8 @@ export const VideoProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
-
 export const useVideoContext = () => {
-    const value = useContext(VideoContext)
-    if (value == null) throw Error("Cannot use outside of videoProvider")
-
-    return value
-}
+    const value = useContext(VideoContext);
+    if (value == null) throw Error("Cannot use outside of videoProvider");
+    return value;
+};

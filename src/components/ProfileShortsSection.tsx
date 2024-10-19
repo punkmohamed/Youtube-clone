@@ -1,8 +1,67 @@
-import React from 'react'
-
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import VideoGrid from "./VideoGrid";
+import { JSX } from "react/jsx-runtime";
+import CategoriesPills from "./CategoriesPills";
+const API_KEY = 'AIzaSyCnDk7A88Tis3iiLKO_GZcRcEtpoh6WMDA';
 const ProfileShortsSection = () => {
+    const categories = ["Latest", "Popular", "Oldest"]
+
+    const [selectedCat, setSelectedCat] = useState(categories[0]);
+    const [channelShortsVideos, setChannelShortsVideos] = useState<
+        { id: string; title: string; thumbnailUrl: string; views: string }[]
+    >([]);
+    const { id } = useParams()
+    useEffect(() => {
+        const fetchVideoDetails = async () => {
+            try {
+                const response = await axios.get(
+                    `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&maxResults=10&type=video&videoDuration=short&key=${API_KEY}`
+                );
+
+                const data = response?.data
+                console.log(data, "data");
+                const videoIds = data.items.map((item: { id: { videoId: any; }; }) => item.id.videoId).join(',');
+
+                if (data.items && data.items.length > 0) {
+                    const statsResponse = await axios.get(
+                        `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds}&key=${API_KEY}`
+                    );
+                    const statsData = statsResponse?.data;
+                    console.log(statsData, "Statistics API Data");
+
+                    const combinedData = data.items.map(
+                        (item: { id: { videoId: string }; snippet: any }, index: number) => ({
+                            id: item.id.videoId,
+                            title: item.snippet.title,
+                            thumbnailUrl: item.snippet.thumbnails.high.url,
+                            views: statsData.items[index]?.statistics.viewCount || "0",
+                        })
+                    );
+                    setChannelShortsVideos(combinedData);
+                }
+
+            } catch (error) {
+                console.error('Error fetching video details:', error);
+            }
+        };
+
+        fetchVideoDetails();
+    }, [id]);
+    console.log(channelShortsVideos, "channelShortsVideos");
+    const shorts = true
     return (
-        <div>ProfileShortsSection</div>
+        <>
+            <div className="flex gap-3 font-semibold">
+                <CategoriesPills categories={categories} selectedCat={selectedCat} onSelect={setSelectedCat} />
+            </div>
+            <div className=" mt-3 grid gap-4 grid-cols-[repeat(auto-fill,minmax(260px,1fr))]">
+                {channelShortsVideos && channelShortsVideos?.map((video: JSX.IntrinsicAttributes & VideoGrid) => (
+                    <VideoGrid key={video.id} {...video} className="h-96" shorts={shorts} />
+                ))}
+            </div>
+        </>
     )
 }
 

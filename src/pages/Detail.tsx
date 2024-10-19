@@ -10,7 +10,7 @@ import axios from "axios";
 
 const API_KEY = 'AIzaSyDEQEJ3qvVvroAwP-pBh97vXMCHDNJzMeY';
 
-type videoDetailsProps = {
+export type videoDetailsProps = {
     kind: string;
     etag: string;
     id: string;
@@ -112,7 +112,6 @@ const Detail = () => {
             <div className="  lg:w-[80em]">
                 <div className=" aspect-video bg-red-800 w-full rounded-xl relative">
                     <img src={thumbnails?.standard?.url} className="block w-full h-full object-cover transition-[border-radius] duration-200 rounded-xl" alt="ThumbNail" />
-
                     <iframe
                         width="100%"
                         height="100%"
@@ -144,25 +143,25 @@ const Detail = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 flex-shrink">
                                 <Button size="default" variant="ghost" className="bg-secondary px-4 rounded-full hidden xl:block">Join</Button>
-                                <Button size="default" variant="dark" className="rounded-full px-5 font-bold ">Subscribe</Button>
+                                <Button size="default" variant="dark" className="rounded-full px-4 font-bold ">Subscribe</Button>
                             </div>
                         </div>
                         <div className="flex gap-1 justify-between flex-grow xl:flex-grow-0">
                             <div>
-                                <Button size="default" variant="ghost" className="bg-secondary px-4 rounded-s-full " >
-                                    <div className="flex gap-1 border-r-2 border-secondary-text pr-4">
+                                <Button size="default" variant="ghost" className="bg-secondary px-2 rounded-s-full " >
+                                    <div className="flex gap-1 border-r-2 border-secondary-text pr-2">
                                         <ThumbsUpIcon /> <span className="">{VIEW_FORMATTER.format(statistics.likeCount)}
                                         </span>
                                     </div>
                                 </Button>
-                                <Button size="default" variant="ghost" className="bg-secondary px-4 rounded-e-full" >
+                                <Button size="default" variant="ghost" className="bg-secondary px-2 rounded-e-full" >
                                     <ThumbsDownIcon />
                                 </Button>
                             </div>
                             <div className="flex gap-2">
-                                <Button size="default" variant="ghost" className="bg-secondary px-4 rounded-full" >
+                                <Button size="default" variant="ghost" className="bg-secondary px-2 rounded-full" >
                                     <div className="flex gap-1  ">
                                         <ArrowUpRight /> <span>Share</span>
                                     </div>
@@ -188,7 +187,7 @@ const Detail = () => {
                             <>
                                 <div className="mt-8">
                                     <h2 className="font-bold text-xl">Description : </h2>
-                                    <p className="ms-1">{showMore ? description : `${description.substring(0, 200)}...`}</p>
+                                    <p className="ms-1 break-words">{showMore ? description : `${description.substring(0, 200)}...`}</p>
                                 </div>
                                 <span className="mt-3 cursor-pointer" onClick={() => setShowMore((prev) => !prev)}>{showMore ? 'Show less' : '...more'}</span>
                             </>

@@ -3,6 +3,7 @@ import { formatDuration } from "../utils/formatDuration"
 import { formatTimeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
 
 import { Link, useLocation } from "react-router-dom"
+import { twMerge } from "tailwind-merge"
 
 type VideoGrid = {
     id: string,
@@ -17,11 +18,13 @@ type VideoGrid = {
     duration: number,
     thumbnailUrl: string,
     videoUrl: string,
-    error?: string
+    error?: string,
+    className?: string,
+    shorts?: boolean
 }
 
 
-const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl, videoUrl, error }: VideoGrid) => {
+const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl, videoUrl, error, className, shorts }: VideoGrid) => {
     const [isVideoPlaying, setisVideoPlaying] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null)
     const { pathname } = useLocation()
@@ -37,13 +40,13 @@ const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl
     }, [isVideoPlaying])
     return (
         <div className="flex flex-col gap-2" onMouseEnter={() => setisVideoPlaying(true)} onMouseLeave={() => setisVideoPlaying(false)}>
-            <Link to={`/watch/${id}`} className="relative aspect-video h-44">
+            <Link to={shorts && shorts === true ? `/shorts/${id}` : `/watch/${id}`} className={twMerge(`relative aspect-video h-44`, className)}>
                 <img src={thumbnailUrl} className={`block w-full h-full object-cover transition-[border-radius] duration-200  ${isVideoPlaying ? "rounded-none" : "rounded-xl"}`} alt="ThumbNail" />
                 <div className=" absolute bottom-1 right-1 bg-secondary-dark text-secondary text-sm px-1 rounded">
-                    {formatDuration(duration)}
+                    {duration}
                 </div>
                 {error ? <video ref={videoRef} muted playsInline src={videoUrl} className={`block h-full object-cover absolute inset-0 transition-opacity duration-200  ${isVideoPlaying ? "opacity-100 delay-200" : "opacity-0"}`}></video>
-                    : isVideoPlaying ? (
+                    : !shorts && isVideoPlaying ? (
                         <iframe
                             width="100%"
                             height="100%"
@@ -64,7 +67,7 @@ const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl
                     </Link>
                 }
                 <div className="flex flex-col">
-                    <Link to={`/watch/${id}`} className="font-bold">{title}</Link>
+                    <Link to={shorts && shorts === true ? `/shorts/${id}` : `/watch/${id}`} className="font-bold">{title}</Link>
                     {!path &&
                         <Link to={`/@${channel.name}/${id}`} className="text-secondary-text text-sm ">{channel.name}
                             <span className="inline-block ml-1 ">
@@ -76,7 +79,7 @@ const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl
                     }
 
                     <div className="text-secondary-text text-sm">
-                        {VIEW_FORMATTER.format(views)} Views • {formatTimeAgo(postedAt)}
+                        {VIEW_FORMATTER.format(views)} Views  {!path && `• ${formatTimeAgo(postedAt)}`}
                     </div>
                 </div>
             </div>
