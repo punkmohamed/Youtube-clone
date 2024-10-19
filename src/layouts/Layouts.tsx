@@ -1,25 +1,29 @@
 
 import { ReactNode } from 'react';
+
 import { SidebarProvider } from '../context/SideBarContext';
 import PageHeader from './PageHeader';
 import SideBar from './SideBar';
+import { VideoProvider } from '../context/videoContext';
 type layOutProps = {
     children: ReactNode,
-    setSearchQuery: (data: string) => void
+
 }
-const Layout = ({ children, setSearchQuery }: layOutProps) => {
+const Layout = ({ children }: layOutProps) => {
     return (
-        <SidebarProvider>
-            <div className="max-h-screen flex flex-col">
-                <PageHeader setSearchQuery={setSearchQuery} />
-                <div className="grid grid-cols-[auto,1fr] flex-grow-1 overflow-auto">
-                    <SideBar />
-                    <div className="overflow-x-hidden px-8 pb-4">
-                        {children}
+        <VideoProvider>
+            <SidebarProvider>
+                <div className="max-h-screen flex flex-col">
+                    <PageHeader />
+                    <div className="grid grid-cols-[auto,1fr] flex-grow-1 overflow-auto">
+                        <SideBar />
+                        <div className="overflow-x-hidden px-4 sm:px-8 pb-4">
+                            {children}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </SidebarProvider>
+            </SidebarProvider>
+        </VideoProvider>
     );
 };
 

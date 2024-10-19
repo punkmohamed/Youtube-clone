@@ -3,18 +3,18 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import Home from './pages/Home';
 import Detail from "./pages/Detail";
 import Layout from "./layouts/Layouts";
-import { useState } from "react";
+import YoutubeProfile from "./pages/youtubeProfile";
 
 const App = () => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
 
   return (
     <>
       <Router>
-        <Layout setSearchQuery={setSearchQuery}>
+        <Layout >
           <Routes>
-            <Route path="/" element={<Home searchQuery={searchQuery} />} />
+            <Route path="/" element={<Home />} />
             <Route path="/watch/:id" element={<Detail />} />
+            <Route path="/:name/:id" element={<YoutubeProfile />} />
           </Routes>
         </Layout>
       </Router>

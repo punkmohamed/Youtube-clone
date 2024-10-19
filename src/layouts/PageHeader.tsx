@@ -4,13 +4,13 @@ import Button from '../components/Button'
 import { useState } from 'react'
 import { useSidebarContext } from '../context/SideBarContext'
 import { useNavigate } from 'react-router-dom'
-type PageHeaderProps = {
-    setSearchQuery: (data: string) => void
-}
-const PageHeader = ({ setSearchQuery }: PageHeaderProps) => {
+import { useVideoContext } from '../context/videoContext'
+
+const PageHeader = () => {
     const [show, setShow] = useState(false)
     const navi = useNavigate()
     const [searchTerm, setSearchTerm] = useState('');
+    const { setSearchQuery } = useVideoContext()
 
     const handleSearch = () => {
         setSearchQuery(searchTerm);
