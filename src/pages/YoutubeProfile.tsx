@@ -11,9 +11,11 @@ import ProfileLiveSection from "../components/ProfileLiveSection";
 import ProfilePlaylists from "../components/ProfilePlaylists";
 import ProfileShortsSection from "../components/ProfileShortsSection";
 import AboutModal from "../components/AboutModel";
+import { formatVideoDuration } from "../utils/formatVideoDuration";
 
 const tabs = ["Home", "Videos", "Shorts", "Live", "Relases", "Playlists", "Posts"]
-const API_KEY = 'AIzaSyDEQEJ3qvVvroAwP-pBh97vXMCHDNJzMeY';
+
+const API_KEY = 'AIzaSyBE6V01lroMLICgaUll6b7zB6n5GDhvyTY';
 
 export type channelDetailsProps = {
     kind: string;
@@ -76,7 +78,9 @@ type Sections = {
 }
 type SectionKey = 'Home' | 'Videos' | 'Shorts' | 'Live' | 'Playlists';
 
+
 const YoutubeProfile = () => {
+
     const [active, setActive] = useState<SectionKey>("Home");
     const [searchIcon, setSearchIcon] = useState(false);
 
@@ -87,6 +91,7 @@ const YoutubeProfile = () => {
     const { id } = useParams()
     const [channelDetails, setChannelDetails] = useState<channelDetailsProps | null>(null);
     useEffect(() => {
+
         const fetchVideoDetails = async () => {
             try {
                 const response = await axios.get(
@@ -103,8 +108,8 @@ const YoutubeProfile = () => {
         };
 
         fetchVideoDetails();
+
     }, [id]);
-    console.log(channelDetails, "channelDetails");
 
 
     // Optional chaining and fallback values applied

@@ -7,26 +7,26 @@ const API_KEY = 'AIzaSyDEQEJ3qvVvroAwP-pBh97vXMCHDNJzMeY';
 const ProfileLiveSection = () => {
     const [channelLiveVideos, setChannelLiveVideos] = useState<channelDetailsProps | null>(null)
     const { id } = useParams()
-    useEffect(() => {
-        const fetchVideoDetails = async () => {
-            try {
-                const response = await axios.get(
-                    `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&eventType=live&type=video&key=${API_KEY}`
-                );
-                const data = response?.data
-                console.log(data, "data");
+    // useEffect(() => {
+    //     const fetchVideoDetails = async () => {
+    //         try {
+    //             const response = await axios.get(
+    //                 `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&eventType=live&type=video&key=${API_KEY}`
+    //             );
+    //             const data = response?.data
+    //             console.log(data, "data");
 
-                if (data.items && data.items.length > 0) {
-                    setChannelLiveVideos(data.items);
-                }
+    //             if (data.items && data.items.length > 0) {
+    //                 setChannelLiveVideos(data.items);
+    //             }
 
-            } catch (error) {
-                console.error('Error fetching video details:', error);
-            }
-        };
+    //         } catch (error) {
+    //             console.error('Error fetching video details:', error);
+    //         }
+    //     };
 
-        fetchVideoDetails();
-    }, [id]);
+    //     fetchVideoDetails();
+    // }, [id]);
     return (
         <>
             {

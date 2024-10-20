@@ -25,10 +25,46 @@ const VideoContext = createContext(null);
 
 export const VideoProvider = ({ children }: { children: ReactNode }) => {
     const [videos, setVideos] = useState<Video[]>([]);
+    const [shortsVideos, setShortsVideos] = useState<
+        { id: string; title: string; thumbnailUrl: string; views: string, postedAt: Date }[]
+    >([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState<string>('');
+    const fetchVideoDetails = async () => {
+        try {
+            const response = await axios.get(
+                `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${searchQuery}&key=${API_KEY}&maxResults=10&type=video&videoDuration=short`
+            );
+            const data = response?.data
+            console.log(data, "data");
+            const videoIds = data.items.map((item: { id: { videoId: any; }; }) => item.id.videoId).join(',');
 
+            if (data.items && data.items.length > 0) {
+                const statsResponse = await axios.get(
+                    `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds}&key=${API_KEY}`
+                );
+                const statsData = statsResponse?.data;
+                console.log(statsData, "Statistics API Data");
+
+                const combinedData = data.items.map(
+                    (item: { id: { videoId: string }; snippet: any }, index: number) => ({
+                        id: item.id.videoId,
+                        title: item.snippet.title,
+                        thumbnailUrl: item.snippet.thumbnails.high.url,
+                        views: statsData.items[index]?.statistics.viewCount || "0",
+                        postedAt: item.snippet.publishedAt,
+                    })
+                );
+                console.log(combinedData, "combinedData");
+
+                setShortsVideos(combinedData);
+            }
+
+        } catch (error) {
+            console.error('Error fetching video details:', error);
+        }
+    };
     useEffect(() => {
         const fetchVideos = async () => {
             try {
@@ -89,6 +125,7 @@ export const VideoProvider = ({ children }: { children: ReactNode }) => {
                 });
 
                 setVideos(mappedVideos);
+                fetchVideoDetails()
             } catch (error) {
                 console.error('Error fetching YouTube videos:', error);
                 setError('Failed to load videos');
@@ -99,11 +136,12 @@ export const VideoProvider = ({ children }: { children: ReactNode }) => {
 
         if (searchQuery) {
             fetchVideos();
+
         }
     }, [searchQuery]);
 
     return (
-        <VideoContext.Provider value={{ videos, loading, error, setSearchQuery }}>
+        <VideoContext.Provider value={{ videos, loading, error, searchQuery, setSearchQuery, shortsVideos }}>
             {children}
         </VideoContext.Provider>
     );

@@ -10,7 +10,7 @@ const ProfileShortsSection = () => {
 
     const [selectedCat, setSelectedCat] = useState(categories[0]);
     const [channelShortsVideos, setChannelShortsVideos] = useState<
-        { id: string; title: string; thumbnailUrl: string; views: string }[]
+        { id: string; title: string; thumbnailUrl: string; views: string, postedAt: Date }[]
     >([]);
     const { id } = useParams()
     useEffect(() => {
@@ -37,9 +37,18 @@ const ProfileShortsSection = () => {
                             title: item.snippet.title,
                             thumbnailUrl: item.snippet.thumbnails.high.url,
                             views: statsData.items[index]?.statistics.viewCount || "0",
+                            postedAt: item.snippet.publishedAt,
                         })
                     );
-                    setChannelShortsVideos(combinedData);
+                    let sortedVideos;
+                    if (selectedCat === "Latest") {
+                        sortedVideos = [...combinedData].sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
+                    } else if (selectedCat === "Popular") {
+                        sortedVideos = [...combinedData].sort((a, b) => b.viewCount - a.viewCount);
+                    } else if (selectedCat === "Oldest") {
+                        sortedVideos = [...combinedData].sort((a, b) => new Date(a.postedAt) - new Date(b.postedAt));
+                    }
+                    setChannelShortsVideos(sortedVideos);
                 }
 
             } catch (error) {
@@ -48,7 +57,7 @@ const ProfileShortsSection = () => {
         };
 
         fetchVideoDetails();
-    }, [id]);
+    }, [id, selectedCat]);
     console.log(channelShortsVideos, "channelShortsVideos");
     const shorts = true
     return (

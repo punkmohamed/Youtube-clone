@@ -1,7 +1,7 @@
 import { MoreVertical } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { formatTimeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
+import { formatTimeAgo, timeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
 import { formatDuration } from "../utils/formatDuration"
 import { twMerge } from "tailwind-merge"
 
@@ -85,9 +85,7 @@ const RelatedVideos = ({ id, title, channel, views, postedAt, duration, descript
                 <div className="text-gray-600 text-xs">
                     <span>{VIEW_FORMATTER.format(views)}  Views</span>
                     <span className="mx-1">•</span>
-                    {path ? <span>{postedAt?.split("T")[0]}</span>
-                        : <span>{formatTimeAgo(postedAt)}</span>
-                    }
+                    <span>{timeAgo(postedAt)}</span>
 
 
                 </div>

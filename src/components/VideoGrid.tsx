@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { formatDuration } from "../utils/formatDuration"
-import { formatTimeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
+import { formatTimeAgo, timeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
 
 import { Link, useLocation } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
@@ -29,6 +29,8 @@ const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl
     const videoRef = useRef<HTMLVideoElement>(null)
     const { pathname } = useLocation()
     const path = pathname.startsWith('/@')
+
+
     useEffect(() => {
         if (videoRef.current == null) return
         if (isVideoPlaying) {
@@ -61,15 +63,15 @@ const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl
 
             </Link>
             <div className="flex gap-2">
-                {!path &&
-                    <Link to={`/@${channel.name}/${id}`} className="flex-shrink-0">
-                        <img src={channel.profileUrl} className="size-12 rounded-full" alt="" />
+                {!path && !shorts &&
+                    <Link to={`/@${channel?.name}/${id}`} className="flex-shrink-0">
+                        <img src={channel?.profileUrl} className="size-12 rounded-full" alt="" />
                     </Link>
                 }
                 <div className="flex flex-col">
                     <Link to={shorts && shorts === true ? `/shorts/${id}` : `/watch/${id}`} className="font-bold">{title}</Link>
-                    {!path &&
-                        <Link to={`/@${channel.name}/${id}`} className="text-secondary-text text-sm ">{channel.name}
+                    {!path && !shorts &&
+                        <Link to={`/@${channel?.name}/${id}`} className="text-secondary-text text-sm ">{channel?.name}
                             <span className="inline-block ml-1 ">
                                 <svg className="w-3 h-3 inline-block" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
@@ -79,7 +81,7 @@ const VideoGrid = ({ id, title, channel, views, postedAt, duration, thumbnailUrl
                     }
 
                     <div className="text-secondary-text text-sm">
-                        {VIEW_FORMATTER.format(views)} Views  {!path && `• ${formatTimeAgo(postedAt)}`}
+                        {VIEW_FORMATTER.format(views)} Views   {className !== "h-96" && `• ${timeAgo(postedAt)}`}
                     </div>
                 </div>
             </div>
