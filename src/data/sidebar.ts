@@ -41,6 +41,30 @@ export const subscriptions = [
     imgUrl:
       "https://yt3.googleusercontent.com/ytc/AIdro_kwFxfJF-fQml8fUIvrd36ZstE2RO-C-IwDB-0qxQoc3Q=s160-c-k-c0x00ffffff-no-rj",
   },
+  {
+    channelName: "Ariana Grande",
+    id: "ArianaGrande",
+    imgUrl:
+      "https://yt3.googleusercontent.com/qwk-sEkLbVw1HFVqW4UCsnyTKdwCsNT8mahFIByvlze-rUXbcrd76evbIivNXQAE4E3zvke5=s160-c-k-c0x00ffffff-no-rj",
+  },
+  {
+    channelName: "xQc",
+    id: "xQc",
+    imgUrl:
+      "https://yt3.googleusercontent.com/MWY7AlLmwfucDnE2DFMnGAgjG7b1e06WmJTLobffLuPm37vRCPrQfiiDi6MuMhX7mWM22sfjGw=s160-c-k-c0x00ffffff-no-rj",
+  },
+  {
+    channelName: "Billie Eilish",
+    id: "BillieEilish",
+    imgUrl:
+      "https://yt3.googleusercontent.com/tdh4GB7GFwOd7e4cdull42vhyFYTkpni9bDkTLJn-UFLbuFA1ygJHeibVays0FN2yFNE-0hsdw=s160-c-k-c0x00ffffff-no-rj",
+  },
+  {
+    channelName: "Web Dev Simplified",
+    id: "WebDevSimplified",
+    imgUrl:
+      "https://yt3.googleusercontent.com/ytc/AIdro_nO3F7DfVXaf6wsHPS_hF327ggeWUCwZSELb5DCWBL1aw=s160-c-k-c0x00ffffff-no-rj",
+  },
 ]
 
 export const playlists = [
