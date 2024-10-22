@@ -28,7 +28,7 @@ import { twMerge } from "tailwind-merge"
 import { playlists, subscriptions } from "../data/sidebar";
 import { useSidebarContext } from "../context/SideBarContext";
 import { PageHeaderFirstSection } from "./PageHeader";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const SideBar = () => {
 
@@ -121,7 +121,7 @@ const SideBar = () => {
                     <LargeSidebarItem
                         Icon={Flame}
                         title="Trending"
-                        url="/trending"
+                        url="/feed/trending"
                     />
                     <LargeSidebarItem
                         Icon={ShoppingBag}
@@ -218,7 +218,7 @@ type LargeSide = {
     isActive?: boolean
 }
 const LargeSidebarItem = ({ Icon, title, url, isActive = false, }: LargeSide) => {
-    return <a href={url} className={twMerge(
+    return <Link to={url} className={twMerge(
         buttonStyles({ variant: "ghost" }),
         `w-full flex items-center rounded-lg gap-4 p-3 ${isActive ? "font-bold bg-neutral-100 hover:bg-secondary" : undefined
         }`
@@ -231,6 +231,6 @@ const LargeSidebarItem = ({ Icon, title, url, isActive = false, }: LargeSide) =>
         <div className="whitespace-nowrap overflow-hidden text-ellipsis">
             {title}
         </div>
-    </a>
+    </Link>
 }
 export default SideBar

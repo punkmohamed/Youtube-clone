@@ -26,12 +26,11 @@ type VideoGrid = {
 
 const RelatedVideos = ({ id, title, channel, views, postedAt, duration, description, thumbnailUrl, className }: VideoGrid) => {
 
-    console.log(duration, "duration");
-
     const [isVideoPlaying, setisVideoPlaying] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null)
     const { pathname } = useLocation()
     const path = pathname.startsWith('/@')
+    const trending = pathname.startsWith('/feed')
     useEffect(() => {
         if (videoRef.current == null) return
         if (isVideoPlaying) {
@@ -66,36 +65,43 @@ const RelatedVideos = ({ id, title, channel, views, postedAt, duration, descript
                 ) : null}
             </div>
             {/* Video Info Section */}
-            <div className={`flex flex-col flex-grow min-w-0 gap-1   ${path && 'gap-5 lg:max-w-none xl:max-w-96'}`}>
+            <div className={`flex flex-col flex-grow min-w-0  gap-1   ${path || trending && 'gap-5 lg:max-w-none xl:max-w-96'}`}>
                 {/* Title */}
                 <h3 className="font-medium text-sm line-clamp-2 leading-tight">
                     {title}
                 </h3>
-                {/* Channel Name */}
-                {!path && <p className="text-gray-600 text-xs break-words ">
-                    {channel.name}
-                    <span className="inline-block ml-1">
-                        <svg className="w-3 h-3 inline-block" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
-                        </svg>
-                    </span>
-                </p>}
+                <div className="flex flex-col gap-1">
+                    {/* Channel Name */}
+                    {!path && <p className="text-gray-600 text-xs break-words ">
+                        {channel.name}
+                        <span className="inline-block ml-1">
+                            <svg className="w-3 h-3 inline-block" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
+                            </svg>
+                        </span>
+                    </p>}
 
-                {/* Views and Time */}
-                <div className="text-gray-600 text-xs">
-                    <span>{VIEW_FORMATTER.format(views)}  Views</span>
-                    <span className="mx-1">•</span>
-                    <span>{timeAgo(postedAt)}</span>
+                    {/* Views and Time */}
+                    <div className="text-gray-600 text-xs">
+                        <span>{VIEW_FORMATTER.format(views)}  Views</span>
+                        <span className="mx-1">•</span>
+                        <span>{timeAgo(postedAt)}</span>
 
 
+                    </div>
+                    {path && <div>
+                        <p className=" hidden sm:block" >{description?.substring(0, 200)}
+                        </p>
+                        <Link to={`/watch/${id}`} className="text-secondary-text uppercase font-semibold text-sm">
+                            READ MORE
+                        </Link>
+                    </div>}
+                    {trending && <div>
+                        <p className=" hidden sm:block text-secondary-text text-xs" >{description?.substring(0, 115)}
+                        </p>
+
+                    </div>}
                 </div>
-                {path && <div>
-                    <p className=" hidden sm:block" >{description?.substring(0, 200)}
-                    </p>
-                    <Link to={`/watch/${id}`} className="text-secondary-text uppercase font-semibold text-sm">
-                        READ MORE
-                    </Link>
-                </div>}
             </div>
             {!path && <MoreVertical className="flex-shrink-0" />}
 

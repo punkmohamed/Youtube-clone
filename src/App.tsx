@@ -5,6 +5,7 @@ import Detail from "./pages/Detail";
 import Layout from "./layouts/Layouts";
 import YoutubeProfile from "./pages/youtubeProfile";
 import Shorts from "./pages/Shorts";
+import Trending from "./pages/Trending";
 
 const App = () => {
 
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="/watch/:id" element={<Detail />} />
             <Route path="/:name/:id" element={<YoutubeProfile />} />
             <Route path="/shorts/:id" element={<Shorts />} />
+            <Route path="/feed/trending" element={<Trending />} />
           </Routes>
         </Layout>
       </Router>
