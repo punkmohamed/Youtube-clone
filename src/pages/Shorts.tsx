@@ -44,9 +44,7 @@ const Shorts = () => {
 
     if (!videoDetails) return <div>Loading...</div>;
 
-    const { snippet, statistics } = videoDetails;
-    const { title, channelTitle, description, channelId, thumbnails, tags, publishedAt } = snippet;
-
+    const { statistics } = videoDetails;
 
     return (
         <div className="flex flex-wrap gap-4 justify-center ">

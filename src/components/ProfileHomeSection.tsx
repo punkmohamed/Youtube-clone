@@ -5,7 +5,7 @@ import RelatedVideos from "./RelatedVideos";
 import { formatVideoDuration } from "../utils/formatVideoDuration";
 const API_KEY = 'AIzaSyDEQEJ3qvVvroAwP-pBh97vXMCHDNJzMeY';
 type ProfileHomeSectionProps = {
-    uploads: string
+    uploads: string | undefined
 }
 type mainVideoProps = {
     id: string,

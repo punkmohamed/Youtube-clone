@@ -7,11 +7,9 @@ import { VIEW_FORMATTER } from "../utils/formatTimeAgo"
 import axios from "axios";
 import ProfileHomeSection from "../components/ProfileHomeSection";
 import ProfileVideosSection from "../components/ProfileVideosSection";
-import ProfileLiveSection from "../components/ProfileLiveSection";
 import ProfilePlaylists from "../components/ProfilePlaylists";
 import ProfileShortsSection from "../components/ProfileShortsSection";
 import AboutModal from "../components/AboutModel";
-import { formatVideoDuration } from "../utils/formatVideoDuration";
 
 const tabs = ["Home", "Videos", "Shorts", "Live", "Relases", "Playlists", "Posts"]
 
@@ -73,10 +71,10 @@ type Sections = {
     Home: JSX.Element;
     Videos: JSX.Element;
     Shorts: JSX.Element;
-    Live: JSX.Element;
+
     Playlists: JSX.Element;
 }
-type SectionKey = 'Home' | 'Videos' | 'Shorts' | 'Live' | 'Playlists';
+type SectionKey = 'Home' | 'Videos' | 'Shorts' | 'Playlists';
 
 
 const YoutubeProfile = () => {
@@ -128,12 +126,11 @@ const YoutubeProfile = () => {
     const viewCount = statistics?.viewCount ?? 1;
     const bannerUrl = brandingSettings?.image?.bannerExternalUrl ?? '';
     const channelCountry = brandingSettings?.channel?.country ?? 'Unknown';
-    const uploads = contentDetails?.relatedPlaylists?.uploads
+    const uploads: string | undefined = contentDetails?.relatedPlaylists?.uploads
     const sections: Sections = {
         Home: <ProfileHomeSection uploads={uploads} />,
         Videos: <ProfileVideosSection />,
         Shorts: <ProfileShortsSection />,
-        Live: <ProfileLiveSection />,
         Playlists: <ProfilePlaylists />,
     };
     if (!channelDetails) return <div>Loading...</div>;

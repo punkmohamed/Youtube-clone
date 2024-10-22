@@ -3,7 +3,6 @@ import Button from "../components/Button"
 import { ArrowDown, ArrowUpRight, MoreHorizontal, MoreVertical, SortDesc, ThumbsDownIcon, ThumbsUpIcon } from "lucide-react"
 import { useEffect, useState } from "react";
 import { timeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
-import { useVideoContext } from "../context/videoContext";
 
 import RelatedVideos from "../components/RelatedVideos";
 import axios from "axios";

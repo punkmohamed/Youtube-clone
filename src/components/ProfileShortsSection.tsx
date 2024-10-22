@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import VideoGrid from "./VideoGrid";
-import { JSX } from "react/jsx-runtime";
 import CategoriesPills from "./CategoriesPills";
 const API_KEY = 'AIzaSyCnDk7A88Tis3iiLKO_GZcRcEtpoh6WMDA';
 const ProfileShortsSection = () => {
@@ -66,7 +65,7 @@ const ProfileShortsSection = () => {
                 <CategoriesPills categories={categories} selectedCat={selectedCat} onSelect={setSelectedCat} />
             </div>
             <div className=" mt-3 grid gap-4 grid-cols-[repeat(auto-fill,minmax(260px,1fr))]">
-                {channelShortsVideos && channelShortsVideos?.map((video: JSX.IntrinsicAttributes & VideoGrid) => (
+                {channelShortsVideos && channelShortsVideos?.map((video) => (
                     <VideoGrid key={video.id} {...video} className="h-96" shorts={shorts} />
                 ))}
             </div>

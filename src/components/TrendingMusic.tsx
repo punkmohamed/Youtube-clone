@@ -16,8 +16,10 @@ type VideoGridProps = {
     videoUrl: string,
     description?: string,
 }
-
-const TrendingMusic = ({ trendingVideos }: VideoGridProps) => {
+type TrendingNowProps = {
+    trendingVideos: VideoGridProps[];
+}
+const TrendingMusic = ({ trendingVideos }: TrendingNowProps) => {
     return (
         <div className="mt-2">
             <div className="flex flex-col gap-1  w-full">

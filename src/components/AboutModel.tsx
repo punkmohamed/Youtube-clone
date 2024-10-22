@@ -5,7 +5,7 @@ import facebook from "../assets/facebook-svgrepo-com.svg"
 import tiktok from "../assets/brand-tiktok-sq-svgrepo-com.svg"
 import instgram from "../assets/instagram-1-svgrepo-com.svg"
 import twitter from "../assets/icons8-twitterx.svg"
-import { formatTimeAgo, VIEW_FORMATTER } from '../utils/formatTimeAgo';
+import { VIEW_FORMATTER } from '../utils/formatTimeAgo';
 type AboutModalProps = {
     isOpen: boolean;
     onClose: () => void;

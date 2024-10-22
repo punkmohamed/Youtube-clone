@@ -9,7 +9,7 @@ import YoutubeShorts from "../components/youtubeShorts";
 
 function Home() {
     const [selectedCat, setSelectedCat] = useState(categories[0]);
-    const { videos, loading, error, searchQuery } = useVideoContext()
+    const { videos, error, searchQuery } = useVideoContext()
     const videoss = error ? fallbackVideos : videos;
 
     return (

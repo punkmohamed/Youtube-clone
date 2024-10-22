@@ -1,8 +1,8 @@
 import { MoreVertical } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { formatTimeAgo, timeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
-import { formatDuration } from "../utils/formatDuration"
+import { timeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
+
 import { twMerge } from "tailwind-merge"
 
 type VideoGrid = {

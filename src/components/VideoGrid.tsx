@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { formatDuration } from "../utils/formatDuration"
-import { formatTimeAgo, timeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
+import { timeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
 
 import { Link, useLocation } from "react-router-dom"
 import { twMerge } from "tailwind-merge"
