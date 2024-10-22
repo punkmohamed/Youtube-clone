@@ -10,7 +10,7 @@ const ProfileShortsSection = () => {
 
     const [selectedCat, setSelectedCat] = useState(categories[0]);
     const [channelShortsVideos, setChannelShortsVideos] = useState<
-        { id: string; title: string; thumbnailUrl: string; views: string, postedAt: number | string | Date }[]
+        { id: string; title: string; thumbnailUrl: string; views: number, postedAt: number | string | Date }[]
     >([]);
     const { id } = useParams()
     useEffect(() => {

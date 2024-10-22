@@ -7,16 +7,16 @@ import { twMerge } from "tailwind-merge"
 type VideoGrid = {
     id: string,
     title: string,
-    channel: {
+    channel?: {
         id: string,
         name: string,
         profileUrl: string
     }
     views: number,
     postedAt: Date | string | number,
-    duration: number,
+    duration?: number | string,
     thumbnailUrl: string,
-    videoUrl: string,
+    videoUrl?: string,
     error?: string,
     className?: string,
     shorts?: boolean

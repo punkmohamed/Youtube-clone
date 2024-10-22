@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { channelDetailProps } from '../pages/Detail';
 import { formatVideoDuration } from '../utils/formatVideoDuration';
 
 const API_KEY = 'AIzaSyCnDk7A88Tis3iiLKO_GZcRcEtpoh6WMDA';
