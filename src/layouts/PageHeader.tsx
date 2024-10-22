@@ -13,10 +13,20 @@ const PageHeader = () => {
     const { setSearchQuery } = useVideoContext()
 
     const handleSearch = () => {
+        if (searchTerm.trim() === '') return;
         setSearchQuery(searchTerm);
         setSearchTerm('');
         navi('/')
     };
+
+    // Function to handle key down event in search input
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSearch();
+        }
+    };
+
     return (
         <div className='flex gap-10 sm:gap-20 justify-between items-center pt-2 mb-6 mx-4'>
             <PageHeaderFirstSection hidden={show} />
@@ -29,6 +39,7 @@ const PageHeader = () => {
                     <input type="search"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyDown={handleKeyDown}
                         placeholder='Search' className='rounded-l-full border border-secondary-border shadow-inner py-1 px-4 text-lg w-full shadow-secondary focus:border-blue-500 outline-none' />
                     <Button type='button'
                         onClick={handleSearch} className=' py-2 px-4 rounded-r-full border border-secondary-border border-l-0 flex-shrink-0'>
