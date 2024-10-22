@@ -1,3 +1,4 @@
+/* eslint-disable no-unexpected-multiline */
 import { Link, useParams } from "react-router-dom"
 import Button from "../components/Button"
 import { ArrowDown, ArrowUpRight, MoreHorizontal, MoreVertical, SortDesc, ThumbsDownIcon, ThumbsUpIcon } from "lucide-react"
@@ -64,7 +65,7 @@ export type videoDetailsProps = {
 };
 export type channelDetailProps = {
     profileImg: string;
-    subscriberCount: number | string;
+    subscriberCount: number | string | bigint;
 }
 type VideoGrid = {
     id: string,
@@ -248,7 +249,8 @@ const Detail = () => {
                                         </svg>
                                     </span></Link>
                                     <div className="text-secondary-text text-sm">
-                                        {VIEW_FORMATTER.format(channelDetail?.subscriberCount)} subscribers
+                                        {VIEW_FORMATTER.format(typeof channelDetail?.subscriberCount === 'string' ? parseInt(channelDetail.subscriberCount) : channelDetail?.subscriberCount)}
+                                        subscribers
 
                                     </div>
                                 </div>
