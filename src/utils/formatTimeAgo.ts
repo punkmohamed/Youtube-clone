@@ -25,7 +25,7 @@ export function formatTimeAgo(date: Date) {
 }
 export const VIEW_FORMATTER = new Intl.NumberFormat(undefined, { notation: "compact" })
 
-export function timeAgo(inputDate: string | Date) {
+export function timeAgo(inputDate: string | Date | number) {
   const date = new Date(inputDate);
   const now = new Date();
 
