@@ -42,11 +42,19 @@ const ProfileShortsSection = () => {
                     );
                     let sortedVideos;
                     if (selectedCat === "Latest") {
-                        sortedVideos = [...combinedData].sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
+                        sortedVideos = [...combinedData].sort((a, b) => {
+                            const dateA = new Date(a.postedAt).getTime();
+                            const dateB = new Date(b.postedAt).getTime();
+                            return dateA - dateB;
+                        });
                     } else if (selectedCat === "Popular") {
                         sortedVideos = [...combinedData].sort((a, b) => b.viewCount - a.viewCount);
                     } else if (selectedCat === "Oldest") {
-                        sortedVideos = [...combinedData].sort((a, b) => new Date(a.postedAt) - new Date(b.postedAt));
+                        sortedVideos = [...combinedData].sort((a, b) => {
+                            const dateA = new Date(a.postedAt).getTime();
+                            const dateB = new Date(b.postedAt).getTime();
+                            return dateB - dateA;
+                        });
                     }
                     setChannelShortsVideos(sortedVideos);
                 }

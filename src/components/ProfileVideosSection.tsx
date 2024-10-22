@@ -47,11 +47,19 @@ const ProfileVideosSection = () => {
                 console.log(videoDetails, "videoDetails");
                 let sortedVideos;
                 if (selectedCat === "Latest") {
-                    sortedVideos = [...videoDetails].sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
+                    sortedVideos = [...videoDetails].sort((a, b) => {
+                        const dateA = new Date(a.postedAt).getTime();
+                        const dateB = new Date(b.postedAt).getTime();
+                        return dateA - dateB;
+                    });
                 } else if (selectedCat === "Popular") {
-                    sortedVideos = [...videoDetails].sort((a, b) => b.views - a.views);
+                    sortedVideos = [...videoDetails].sort((a, b) => b.viewCount - a.viewCount);
                 } else if (selectedCat === "Oldest") {
-                    sortedVideos = [...videoDetails].sort((a, b) => new Date(a.postedAt) - new Date(b.postedAt));
+                    sortedVideos = [...videoDetails].sort((a, b) => {
+                        const dateA = new Date(a.postedAt).getTime();
+                        const dateB = new Date(b.postedAt).getTime();
+                        return dateB - dateA;
+                    });
                 }
                 setChannelVideos(sortedVideos);
             } catch (error) {
