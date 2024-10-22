@@ -14,12 +14,10 @@ type mainVideoProps = {
     postedAt: Date | string,
     thumbnailUrl: string,
     views: number,
-    duration: number
+    duration: number | string
 }
 const ProfileHomeSection = ({ uploads }: ProfileHomeSectionProps) => {
-    console.log(uploads, "uploads");
 
-    const [channelHomeVideos, setChannelHomeVideos] = useState(null)
     const [mainVideo, setMainVideo] = useState<mainVideoProps | null>(null)
     const { id } = useParams()
     useEffect(() => {
@@ -43,9 +41,8 @@ const ProfileHomeSection = ({ uploads }: ProfileHomeSectionProps) => {
                 );
 
                 const videoData = videoDetailsResponse.data.items;
-                console.log(videoData, "videoData");
 
-                setChannelHomeVideos(videoData);
+
                 const id = videoData?.[0].id
                 const title = videoData?.[0].snippet?.title
                 const description = videoData?.[0].snippet?.description

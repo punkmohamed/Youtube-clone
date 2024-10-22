@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import Home from './pages/Home';
 import Detail from "./pages/Detail";
 import Layout from "./layouts/Layouts";
-import YoutubeProfile from "./pages/youtubeProfile";
+
 import Shorts from "./pages/Shorts";
 import Trending from "./pages/Trending";
+import YoutubeProfile from "./pages/YoutubeProfile";
 
 const App = () => {
 
