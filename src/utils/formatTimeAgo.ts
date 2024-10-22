@@ -25,11 +25,11 @@ export function formatTimeAgo(date: Date) {
 }
 export const VIEW_FORMATTER = new Intl.NumberFormat(undefined, { notation: "compact" })
 
-export function timeAgo(inputDate) {
+export function timeAgo(inputDate: string | Date) {
   const date = new Date(inputDate);
   const now = new Date();
 
-  const seconds = Math.floor((now - date) / 1000);
+  const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);

@@ -11,7 +11,6 @@ import ProfilePlaylists from "../components/ProfilePlaylists";
 import ProfileShortsSection from "../components/ProfileShortsSection";
 import AboutModal from "../components/AboutModel";
 
-const tabs = ["Home", "Videos", "Shorts", "Live", "Relases", "Playlists", "Posts"]
 
 const API_KEY = 'AIzaSyBE6V01lroMLICgaUll6b7zB6n5GDhvyTY';
 
@@ -74,7 +73,9 @@ type Sections = {
 
     Playlists: JSX.Element;
 }
-type SectionKey = 'Home' | 'Videos' | 'Shorts' | 'Playlists';
+type SectionKey = 'Home' | 'Videos' | 'Shorts' | 'Live' | 'Relases' | 'Playlists' | 'Posts';
+
+const tabs: SectionKey[] = ["Home", "Videos", "Shorts", "Live", "Relases", "Playlists", "Posts"]
 
 
 const YoutubeProfile = () => {
