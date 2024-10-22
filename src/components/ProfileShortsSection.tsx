@@ -45,15 +45,16 @@ const ProfileShortsSection = () => {
                         sortedVideos = [...combinedData].sort((a, b) => {
                             const dateA = new Date(a.postedAt).getTime();
                             const dateB = new Date(b.postedAt).getTime();
-                            return dateA - dateB;
+                            return dateB - dateA;
                         });
                     } else if (selectedCat === "Popular") {
-                        sortedVideos = [...combinedData].sort((a, b) => b.viewCount - a.viewCount);
+                        sortedVideos = [...combinedData].sort((a, b) => b.views - a.views);
                     } else if (selectedCat === "Oldest") {
                         sortedVideos = [...combinedData].sort((a, b) => {
                             const dateA = new Date(a.postedAt).getTime();
                             const dateB = new Date(b.postedAt).getTime();
-                            return dateB - dateA;
+
+                            return dateA - dateB;
                         });
                     }
                     setChannelShortsVideos(sortedVideos);
