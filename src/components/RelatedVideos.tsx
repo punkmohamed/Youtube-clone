@@ -6,23 +6,24 @@ import { timeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
 import { twMerge } from "tailwind-merge"
 
 type VideoGrid = {
-    id: string,
-    title: string,
-    channel: {
+    id?: string,
+    title?: string,
+    channel?: {
         id: string,
         name: string,
         profileUrl: string
     }
-    views: number,
-    postedAt: Date | string,
-    duration: number,
-    thumbnailUrl: string,
-    videoUrl: string,
+    views?: number,
+    postedAt?: Date | string,
+    duration?: string | number,
+    thumbnailUrl?: string,
+    videoUrl?: string,
     error?: string,
     description?: string,
     className?: string
 
 }
+
 
 const RelatedVideos = ({ id, title, channel, views, postedAt, duration, description, thumbnailUrl, className }: VideoGrid) => {
 

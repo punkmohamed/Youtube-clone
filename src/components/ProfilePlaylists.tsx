@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -21,7 +22,7 @@ const ProfilePlaylists = () => {
             );
             console.log(response.data.items, "response.data.items");
 
-            const videos = response.data.items.map((item) => ({
+            const videos = response.data.items.map((item: any) => ({
                 playListId: item.id,
                 title: item.snippet.title,
                 videosListNumber: item.contentDetails.itemCount,

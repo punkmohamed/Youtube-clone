@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import CategoriesPills from "../components/CategoriesPills";
 import VideoGrid from "../components/VideoGrid";
@@ -14,7 +15,7 @@ type VideoDetails = {
     thumbnailUrl: string;
     duration: string;
     views: number;
-    postedAt: Date | string;
+    postedAt: Date | string | Date;
 };
 const ProfileVideosSection = () => {
     const [selectedCat, setSelectedCat] = useState(categories[0]);

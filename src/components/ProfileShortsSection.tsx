@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -9,7 +10,7 @@ const ProfileShortsSection = () => {
 
     const [selectedCat, setSelectedCat] = useState(categories[0]);
     const [channelShortsVideos, setChannelShortsVideos] = useState<
-        { id: string; title: string; thumbnailUrl: string; views: string, postedAt: Date }[]
+        { id: string; title: string; thumbnailUrl: string; views: string, postedAt: number | string | Date }[]
     >([]);
     const { id } = useParams()
     useEffect(() => {

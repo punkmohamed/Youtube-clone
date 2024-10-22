@@ -13,7 +13,7 @@ type VideoGrid = {
         profileUrl: string
     }
     views: number,
-    postedAt: Date,
+    postedAt: Date | string | number,
     duration: number,
     thumbnailUrl: string,
     videoUrl: string,
