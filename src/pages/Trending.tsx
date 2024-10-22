@@ -8,7 +8,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { formatVideoDuration } from '../utils/formatVideoDuration';
 
-const tabs = ["Now", "Music", "Gaming", "Movies"]
 type Sections = {
     Now: JSX.Element;
     Music: JSX.Element;
@@ -16,6 +15,8 @@ type Sections = {
     Movies: JSX.Element;
 }
 type SectionKey = 'Now' | 'Music' | 'Gaming' | 'Movies';
+const tabs: SectionKey[] = ["Now", "Music", "Gaming", "Movies"];
+
 type VideoGrid = {
     id: string,
     title: string,
