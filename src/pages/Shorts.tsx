@@ -5,14 +5,15 @@ import { useParams } from "react-router-dom";
 import Button from "../components/Button";
 import { ArrowUpRight, MessageSquareTextIcon, MoreVerticalIcon, ThumbsDown, ThumbsUp } from "lucide-react";
 import { VIEW_FORMATTER } from "../utils/formatTimeAgo";
+import { useApiContext } from "../context/API_KEYS";
 
-const API_KEY = 'AIzaSyDEQEJ3qvVvroAwP-pBh97vXMCHDNJzMeY';
+
 
 const Shorts = () => {
     const { id } = useParams()
     const [videoDetails, setVideoDetails] = useState<videoDetailsProps | null>(null);
     const [channelDetail, setChannelDetail] = useState<channelDetailProps | null>(null)
-
+    const { API_KEYS_3: API_KEY } = useApiContext()
     useEffect(() => {
         const fetchVideoDetails = async () => {
             try {

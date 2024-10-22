@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { formatVideoDuration } from '../utils/formatVideoDuration';
-
-const API_KEY = 'AIzaSyCnDk7A88Tis3iiLKO_GZcRcEtpoh6WMDA';
+import { useApiContext } from './API_KEYS';
 
 // Define the structure of the video data using TypeScript interfaces
 interface Video {
@@ -23,6 +22,7 @@ interface Video {
 const VideoContext = createContext(null);
 
 export const VideoProvider = ({ children }: { children: ReactNode }) => {
+    const { API_KEYS_1: API_KEY } = useApiContext()
     const [videos, setVideos] = useState<Video[]>([]);
     const [shortsVideos, setShortsVideos] = useState<
         { id: string; title: string; thumbnailUrl: string; views: string, postedAt: Date }[]

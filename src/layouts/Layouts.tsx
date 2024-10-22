@@ -5,25 +5,28 @@ import { SidebarProvider } from '../context/SideBarContext';
 import PageHeader from './PageHeader';
 import SideBar from './SideBar';
 import { VideoProvider } from '../context/videoContext';
+import { ApiProvider } from '../context/API_KEYS';
 type layOutProps = {
     children: ReactNode,
 
 }
 const Layout = ({ children }: layOutProps) => {
     return (
-        <VideoProvider>
-            <SidebarProvider>
-                <div className="max-h-screen flex flex-col">
-                    <PageHeader />
-                    <div className="grid grid-cols-[auto,1fr] flex-grow-1 overflow-auto">
-                        <SideBar />
-                        <div className="overflow-x-hidden px-4 sm:px-8 pb-4">
-                            {children}
+        <ApiProvider>
+            <VideoProvider>
+                <SidebarProvider>
+                    <div className="max-h-screen flex flex-col">
+                        <PageHeader />
+                        <div className="grid grid-cols-[auto,1fr] flex-grow-1 overflow-auto">
+                            <SideBar />
+                            <div className="overflow-x-hidden px-4 sm:px-8 pb-4">
+                                {children}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </SidebarProvider>
-        </VideoProvider>
+                </SidebarProvider>
+            </VideoProvider>
+        </ApiProvider>
     );
 };
 

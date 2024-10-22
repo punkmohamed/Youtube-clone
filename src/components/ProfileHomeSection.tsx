@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RelatedVideos from "./RelatedVideos";
 import { formatVideoDuration } from "../utils/formatVideoDuration";
-const API_KEY = 'AIzaSyDEQEJ3qvVvroAwP-pBh97vXMCHDNJzMeY';
+import { useApiContext } from "../context/API_KEYS";
+
 type ProfileHomeSectionProps = {
     uploads: string | undefined
 }
@@ -18,7 +19,7 @@ type mainVideoProps = {
     duration: number | string
 }
 const ProfileHomeSection = ({ uploads }: ProfileHomeSectionProps) => {
-
+    const { API_KEYS_4: API_KEY } = useApiContext()
     const [mainVideo, setMainVideo] = useState<mainVideoProps | null>(null)
     const { id } = useParams()
     useEffect(() => {

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Button from "./Button";
 import { ListVideo, Play, SortDesc } from "lucide-react";
+import { useApiContext } from "../context/API_KEYS";
 
 type PlayListProps = {
     playListId: string;
@@ -11,9 +12,10 @@ type PlayListProps = {
     videosListNumber: number;
     thumbnail: string;
 }
-const API_KEY = 'AIzaSyBE6V01lroMLICgaUll6b7zB6n5GDhvyTY';
+
 const ProfilePlaylists = () => {
     const [channelPlayListVideos, setChannelPlayListVideos] = useState<PlayListProps[]>([])
+    const { API_KEYS_4: API_KEY } = useApiContext()
     const { id } = useParams()
     const fetchPlaylistItems = async () => {
         try {

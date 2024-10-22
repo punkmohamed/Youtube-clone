@@ -7,7 +7,8 @@ import VideoGrid from "../components/VideoGrid";
 import { useEffect, useState } from "react";
 import { formatVideoDuration } from "../utils/formatVideoDuration";
 import { useParams } from "react-router-dom";
-const API_KEY = 'AIzaSyBE6V01lroMLICgaUll6b7zB6n5GDhvyTY';
+import { useApiContext } from "../context/API_KEYS";
+
 const categories = ["Latest", "Popular", "Oldest"]
 type VideoDetails = {
     id: string;
@@ -20,13 +21,14 @@ type VideoDetails = {
 const ProfileVideosSection = () => {
     const [selectedCat, setSelectedCat] = useState(categories[0]);
     const [channelVideos, setChannelVideos] = useState<VideoDetails[]>([]);
+    const { API_KEYS_4: API_KEY, API_KEYS_3 } = useApiContext()
     const { id } = useParams()
     useEffect(() => {
         const fetchChannelVideos = async () => {
             try {
                 // Step 1: Get the list of video IDs from the channel
                 const searchResponse = await axios.get(
-                    `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&maxResults=15&order=date&type=video&key=${API_KEY}`
+                    `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&maxResults=15&order=date&type=video&key=${API_KEYS_3}`
                 );
 
                 const videoIds = searchResponse.data.items.map((item: any) => item.id.videoId).join(',');

@@ -7,6 +7,7 @@ import TrendingMusic from "../components/TrendingMusic";
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { formatVideoDuration } from '../utils/formatVideoDuration';
+import { useApiContext } from '../context/API_KEYS';
 
 type Sections = {
     Now: JSX.Element;
@@ -33,13 +34,12 @@ type VideoGrid = {
     description?: string,
 }
 
-const API_KEY = 'AIzaSyBE6V01lroMLICgaUll6b7zB6n5GDhvyTY';
 const Trending = () => {
 
     const [active, setActive] = useState<SectionKey>("Now");
     const [trendingVideos, setTrendingVideos] = useState<VideoGrid[]>([]);
     const [category, setCategory] = useState<number | string>('');
-
+    const { API_KEYS_3: API_KEY } = useApiContext()
 
 
     useEffect(() => {

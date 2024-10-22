@@ -8,8 +8,8 @@ import { timeAgo, VIEW_FORMATTER } from "../utils/formatTimeAgo"
 import RelatedVideos from "../components/RelatedVideos";
 import axios from "axios";
 import { formatVideoDuration } from "../utils/formatVideoDuration";
+import { useApiContext } from "../context/API_KEYS";
 
-const API_KEY = 'AIzaSyDEQEJ3qvVvroAwP-pBh97vXMCHDNJzMeY';
 
 export type videoDetailsProps = {
     kind: string;
@@ -96,7 +96,7 @@ const Detail = () => {
     const [channelDetail, setChannelDetail] = useState<channelDetailProps | null>(null)
     const [relatedVideo, setRelatedVideos] = useState<VideoGrid[]>([]);
     const [comments, setComments] = useState<Comment[]>([]);
-
+    const { API_KEYS_2: API_KEY } = useApiContext()
     const [showMore, setShowMore] = useState(false);
     const fetchComments = async () => {
         try {

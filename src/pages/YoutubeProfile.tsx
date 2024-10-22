@@ -10,9 +10,10 @@ import ProfileVideosSection from "../components/ProfileVideosSection";
 import ProfilePlaylists from "../components/ProfilePlaylists";
 import ProfileShortsSection from "../components/ProfileShortsSection";
 import AboutModal from "../components/AboutModel";
+import { useApiContext } from "../context/API_KEYS";
 
 
-const API_KEY = 'AIzaSyBE6V01lroMLICgaUll6b7zB6n5GDhvyTY';
+
 
 export type channelDetailsProps = {
     kind: string;
@@ -79,7 +80,7 @@ const tabs: SectionKey[] = ["Home", "Videos", "Shorts", "Live", "Relases", "Play
 
 
 const YoutubeProfile = () => {
-
+    const { API_KEYS_3: API_KEY } = useApiContext()
     const [active, setActive] = useState<SectionKey>("Home");
     const [searchIcon, setSearchIcon] = useState(false);
 

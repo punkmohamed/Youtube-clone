@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import VideoGrid from "./VideoGrid";
 import CategoriesPills from "./CategoriesPills";
-const API_KEY = 'AIzaSyCnDk7A88Tis3iiLKO_GZcRcEtpoh6WMDA';
+import { useApiContext } from "../context/API_KEYS";
+
 const ProfileShortsSection = () => {
     const categories = ["Latest", "Popular", "Oldest"]
-
+    const { API_KEYS_4: API_KEY } = useApiContext()
     const [selectedCat, setSelectedCat] = useState(categories[0]);
     const [channelShortsVideos, setChannelShortsVideos] = useState<
         { id: string; title: string; thumbnailUrl: string; views: number, postedAt: number | string | Date }[]
