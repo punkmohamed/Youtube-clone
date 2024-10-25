@@ -61,12 +61,13 @@ const ProfilePlaylists = () => {
                                 <ListVideo className="inline-block" />
                                 <span className="font-semibold ">  {playList.videosListNumber} videos</span>
                             </div>
+                            <div className="bg-black transition-opacity opacity-0 hover:opacity-70 absolute inset-0 rounded-lg text-white text-center flex items-center gap-1 font-semibold text-sm  justify-center">
+                                <Play /> PLAY ALL
+                            </div>
                         </div>
                         <h3 className="font-semibold text-[0.9rem]" >{playList.title}</h3>
                         <h4 className="font-semibold text-sm text-secondary-text">View full playlist</h4>
-                        <div className="bg-black transition-opacity opacity-0 hover:opacity-70 absolute inset-0 rounded-lg text-white text-center flex items-center gap-1 font-semibold text-sm  justify-center">
-                            <Play /> PLAY ALL
-                        </div>
+
                     </div>
                 ))}
 
