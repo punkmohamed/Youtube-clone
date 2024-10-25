@@ -52,7 +52,7 @@ const ProfilePlaylists = () => {
                 </Button>
             </div>
 
-            <div className=" mt-6 grid gap-5  grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+            <div className=" mt-6 grid gap-7  grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
                 {channelPlayListVideos && channelPlayListVideos.map((playList) => (
                     <div key={playList.playListId} className=" group flex flex-col gap-2 cursor-pointer  relative before:content-[''] before:h-16 before:top-0 before:mx-2 before:rounded-lg before:-translate-y-1.5 before:absolute  before:w-56 before:bg-secondary-border  " >
                         <div className="relative aspect-video size-full border-t border-white h-32 w-60">
